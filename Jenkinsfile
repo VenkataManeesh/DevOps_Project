@@ -39,7 +39,7 @@ pipeline {
         stage('Clean') {
             steps {
                 echo "Clean Started"
-                sh 'mvn clean -f spring-boot-jwt/pom.xml'
+                bat(script: 'mvn clean -f spring-boot-jwt\\pom.xml', returnStatus: true)
                 echo "Clean End"
             }
         }
@@ -47,7 +47,7 @@ pipeline {
         stage('Compile') {
             steps {
                 echo "Code Compilation Started"
-                sh 'mvn compile -f spring-boot-jwt/pom.xml'
+                bat(script: 'mvn compile -f spring-boot-jwt\\pom.xml', returnStatus: true)
                 echo "Code Compilation End"
             }
         }
@@ -55,9 +55,9 @@ pipeline {
         stage('Build Image') {
             steps {
                 echo "Build Image Started"
-                sh 'mvn package -f spring-boot-jwt/pom.xml -Dmaven.test.skip=true'
-                sh "docker build --build-arg VER=${jarVersion} -f spring-boot-jwt/dockerfile -t spring/spring-boot-jwt:${tagName} ./"
-                echo "Build Image Started"
+                bat(script: 'mvn package -f spring-boot-jwt\\pom.xml -Dmaven.test.skip=true', returnStatus: true)
+                bat(script: 'docker build --build-arg VER=${jarVersion} -f spring-boot-jwt\\dockerfile -t spring/spring-boot-jwt:${tagName} .', returnStatus: true)
+                echo "Build Image End"
             }
         }
     }
