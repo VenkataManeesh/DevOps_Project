@@ -20,6 +20,13 @@ pipeline {
     agent any
 
     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your project's source code from your version control system (e.g., Git)
+                checkout scm
+            }
+        }
+
         stage('Build with Maven') {
             steps {
                 // Build your project with Maven
