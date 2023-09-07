@@ -30,7 +30,7 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 // Build your project with Maven
-                bat 'mvn clean install' // Modify this command as needed
+                sh 'mvn clean install' // Modify this command as needed
             }
         }
 
