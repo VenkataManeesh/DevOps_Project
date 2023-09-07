@@ -30,13 +30,13 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 // Build your project with Maven
-                sh 'mvn clean install' // Modify this command as needed
+                sh 'mvn clean package' // Modify this command as needed
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                // Build the Docker image using the Dockerfile
+                // Build the Docker image using a Dockerfile
                 script {
                     def customImageTag = "my-app:${env.BUILD_NUMBER}" // Customize the image tag
 
