@@ -19,7 +19,7 @@
 pipeline {
     agent any 
     environment {
-        Main = 'main' // Specify your desired branch name here
+        Main = 'Main' // Specify your desired branch name here with the correct case
         jarVersion = '1.0' // Specify your desired jar version here
         tagName = 'latest' // Specify your desired Docker image tag here
     }
@@ -27,10 +27,10 @@ pipeline {
 
         stage('SCM Preparation') {
             steps {
-                echo "BranchName: ${env.Main}"
+                echo "BranchName: ${Main}"
                 echo "Code Update Started"
                 checkout([$class: 'GitSCM',
-                          branches: [[name: "${env.Main}"]],
+                          branches: [[name: "${Main}"]],
                           userRemoteConfigs: [[url: 'https://github.com/VenkataManeesh/DevOps_Project.git']]])
                 echo "Code Update End"
             }
@@ -52,13 +52,11 @@ pipeline {
             }
         }
         
-
-        
         stage('Build Image') {
             steps {
                 echo "Build Image Started"
                 sh 'mvn package -f spring-boot-jwt/pom.xml -Dmaven.test.skip=true'
-                sh "docker build --build-arg VER=${env.jarVersion} -f spring-boot-jwt/dockerfile -t spring/spring-boot-jwt:${env.tagName} ./"
+                sh "docker build --build-arg VER=${jarVersion} -f spring-boot-jwt/dockerfile -t spring/spring-boot-jwt:${tagName} ./"
                 echo "Build Image Started"
             }
         }
